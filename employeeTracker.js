@@ -84,22 +84,22 @@ function viewAllEmployees() {
 // ADD EMPLOYEE QUESTIONS
 function addEmployee() {
 
-    var query = connection.query("INSERT INTO employeeTable SET ?",
-        {
-            firstName: "Rocky Road",
-            lastName: 3.0,
-            roleID: 50
-        },
-        function (err, res) {
-            console.log(res.affectedRows + " product inserted!\n");
-            // Call updateProduct AFTER the INSERT completes
-            updateProduct();
-        }
-    )
+    // var query = connection.query("INSERT INTO employeeTable SET ?",
+    //     {
+    //         firstName: "Rocky Road",
+    //         lastName: 3.0,
+    //         roleID: 50
+    //     },
+    //     function (err, res) {
+    //         console.log(res.affectedRows + " product inserted!\n");
+    //         // Call updateProduct AFTER the INSERT completes
+    //         updateProduct();
+    //     }
+    // )
     inquirer
         .prompt([
             {
-                name: "employeeName",
+                name: "employeFirstName",
                 type: "input",
                 message: "What is the employee's first name?"
             },
@@ -112,13 +112,20 @@ function addEmployee() {
                 name: "employeeRole",
                 type: "list",
                 message: "What is the employee's role?",
-                choices: ["Sales Manager", "Salesperson", "Web Developer"]
+                choices: ["Salesperson", "Manager", "Web Developer"]
             }
-        ])
+        ]).then(function (answer) {
+            connection.query("INSERT INTO employee SET ?", {
+                employeeFirstName: answer.employeeFirstName,
+                employeeLastName: answer.employeeLastName,
+                employeeRole: answer.employeeRole
+            })
+        })
 };
 
 // UPDATE EMPLYEE MANAGER
 function updateEmployeeManager() {
+    var done = this.async();
     inquirer
         .prompt([
             {
