@@ -1,40 +1,37 @@
 -- DEPARTMENTS
-INSERT INTO departmentTable (departmentName)
-VALUES ("Executive Department");
+INSERT INTO departmentTable (department_id, departmentName)
+VALUES ("Sales");
 
-INSERT INTO departmentTable (departmentName)
-VALUES ("Magical Law Enforcement");
+INSERT INTO departmentTable (department_id, departmentName)
+VALUES ("Management");
 
-INSERT INTO departmentTable (departmentName)
-VALUES ("Department for the Improper Use of Magic");
+INSERT INTO departmentTable (department_id, departmentName)
+VALUES ("Engineering");
 
 
 -- ROLE TABLE
-INSERT INTO roleTable (title, salary, departmentID)
-VALUES ("Minister of Magic", 200000, 1);
+INSERT INTO roleTable (title, salary, department_id)
+VALUES ("Manager", 200000, 2);
 
-INSERT INTO roleTable (title, salary, departmentID)
-VALUES ("Junior Assistant", 70000, 1);
+INSERT INTO roleTable (title, salary, department_id)
+VALUES ("Web Developer", 70000, 3);
 
-INSERT INTO roleTable(title, salary departmentID)
-VALUES ("Department Manager", 80000, 3);
-
-INSERT INTO roleTable (title, salary, departmentID)
-VALUES ("Auror", 100000, 2);
+INSERT INTO roleTable (title, salary, department_id)
+VALUES ("Salesperson", 80000, 1);
 
 
 -- EMPLOYEES
-INSERT INTO employeeTable (firstName, lastName, roleID)
-VALUES ("Cornelius" , "Fudge", 1);
+INSERT INTO employeeTable (firstName, lastName, role_id)
+VALUES ("Amani" , "Draper", 1);
 
-INSERT INTO employeeTable (firstName, lastName, roleID)
-VALUE ("Percy", "Weasly", 2);
+INSERT INTO employeeTable (firstName, lastName, role_id)
+VALUE ("Lila", "Bowman", 3);
 
-INSERT INTO employeeTable (firstName, lastName, roleID)
-VALUES ("Kinsley" , "Shacklebolt", 3);
+INSERT INTO employeeTable (firstName, lastName, role_id)
+VALUES ("Cassius" , "Holland", 3);
 
-INSERT INTO employeeTable (firstName, lastName, roleID)
-VALUE ("Arthur", "Weasly", 4);
+INSERT INTO employeeTable (firstName, lastName, role_id)
+VALUE ("Athena", "Lopez", 2);
 
-INSERT INTO employeeTable (firstName, lastName, roleID)
-VALUE ("Alastor", "Moody", 3);
+INSERT INTO employeeTable (firstName, lastName, role_id)
+VALUE ("Al", "Moody", 3);

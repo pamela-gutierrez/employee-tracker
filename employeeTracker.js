@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var consoleTable = require("console.table");
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -26,7 +27,7 @@ function startingPrompt() {
         .prompt([
             {
                 type: "list",
-                name: "firstPrompt",
+                name: "startingPromptOptions",
                 choices: [
                     "Add Employees",
                     "Add Roles",
@@ -37,19 +38,66 @@ function startingPrompt() {
                     "Update Employee Role"],
                 message: "What would you like to do?"
             }
-        ]);
-};
+        ]).then(function (answer) {
+            switch (answer.startingPromptOptions) {
+                case "Add Employees":
+                    addEmployees();
+                    break;
 
+                case "Add Roles":
+                    addRoles();
+                    break;
+
+                case "Add Departments":
+                    addDepartment();
+                    break;
+
+                case "View All Roles":
+                    viewAllRoles();
+                    break;
+
+                case "View All Departments":
+                    viewAllDepartments();
+                    break;
+
+                case "View All Employees":
+                    viewAllEmployees();
+                    break;
+
+                case "Update Employee Role":
+                    updateEmployeeRole();
+                    break;
+            }
+
+        })
+}
+
+// VIEW ALL EMPLOYEES
+
+function viewAllEmployees() {
+    connection.query("SELECT * FROM employeeTable", function (err, res) {
+        if (err) throw err;
+        console.table(res);
+    })
+}
 
 // ADD EMPLOYEE QUESTIONS
 function addEmployee() {
+
+    var query = connection.query("INSERT INTO employeeTable SET ?",
+        {
+            firstName: "Rocky Road",
+            lastName: 3.0,
+            roleID: 50
+        },
+        function (err, res) {
+            console.log(res.affectedRows + " product inserted!\n");
+            // Call updateProduct AFTER the INSERT completes
+            updateProduct();
+        }
+    )
     inquirer
         .prompt([
-            {
-                name: "employeeID",
-                type: "number",
-                message: "What is the employee's ID number?"
-            },
             {
                 name: "employeeName",
                 type: "input",
@@ -60,8 +108,35 @@ function addEmployee() {
                 type: "input",
                 message: "What is the employee's last name?"
             },
+            {
+                name: "employeeRole",
+                type: "list",
+                message: "What is the employee's role?",
+                choices: ["Sales Manager", "Salesperson", "Web Developer"]
+            }
         ])
 };
+
+// UPDATE EMPLYEE MANAGER
+function updateEmployeeManager() {
+    inquirer
+        .prompt([
+            {
+                name: "manager",
+                type: "list",
+                message: "Which employee's manager do you want to update?",
+                choices: "EMPLOYEES"
+                // DISPLAY ALL EMPLOYEE LIST
+            },
+            {
+                name: "updateEmployeeManager",
+                type: "list",
+                message: "Which employee do you want to set as manager for the selected employee?",
+                choices: "THIS WOULD BE ALL EMPLOYEES"
+            }
+            // KICK BACK TO STARTING PROMPT
+        ])
+}
 
 // ADD ROLES QUESTIONS
 function addRoles() {
@@ -70,31 +145,80 @@ function addRoles() {
             {
                 name: "role",
                 type: "input",
+                message: "What is the role?"
+            },
+            {
+                name: "salary",
+                type: "number",
+                message: "What is the salary?"
+            },
+            {
+                name: "depID",
+                type: "number",
+                message: "What is the department ID?"
 
             }
         ])
 
 }
 
-function addDepartments() {
+function removeEmployee() {
+    inquirer
+        .prompt([
+            {
+                name: "removeEmployee",
+                type: "list",
+                message: "Which employee do you want to remove?",
+                choices: " INSERT LIST  OF EVERY EMPLOYEE IN EMPLOYEE TABLE SO MAYBE DO FUNCTION TO DISPLAY EMPLOYEES?"
+            }
+            // THEN THEY CHOOSE THE EMPLOYEE AND I DISPLAY "Removed employee from database."
+            // THEN KICK THEM BACK TO STARTING PROMPT
+        ])
+}
 
+function addDepartment() {
+    inquirer
+        .prompt([
+            {
+                name: "depName",
+                type: "input",
+                message: "What is the department's name?"
+            },
+            {
+                name: "depID",
+                type: "number",
+                message: "What is the department ID?"
+            }
+        ])
 }
 
 
 function viewAllRoles() {
-
+    connection.query("SELECT * FROM roleTable", function (err, res) {
+        if (err) throw err;
+        console.table(res);
+    })
 }
 
 
 function viewAllDepartments() {
-
+    connection.query("SELECT * FROM departmentTable", function (err, res) {
+        if (err) throw err;
+        console.table(res);
+    });
 }
 
 
-function updateEmployeeRole() {
+            // function updateEmployeeRole() {
+            //     inquirer
+            //         .prompt([
+            //             {
+            //                 name: "updateEmployeeRole",
+            //                 type: "list",
+            //                 message: "Which employee's role would you like to update?",
+            //                 choices: "LIST ALL EMPLOYEES HERE"
 
-}
+            //             }
+            //         ])
 
-
-
-
+            // }
