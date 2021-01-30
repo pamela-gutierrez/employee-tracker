@@ -35,3 +35,6 @@ VALUE ("Athena", "Lopez", 2);
 
 INSERT INTO employeeTable (firstName, lastName, role_id)
 VALUE ("Al", "Moody", 3);
+
+INSERT INTO employeeTable (firstName, lastName, role_id)
+VALUE ("Nadia", "Garcia", 1);
